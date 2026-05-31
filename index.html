@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Gemini AI</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 10px; }
+        #output { border: 1px solid #ccc; padding: 15px; min-height: 100px; margin-top: 10px; border-radius: 5px; }
+        input[type="text"] { width: 70%; padding: 8px; }
+        button { padding: 8px 15px; }
+    </style>
+</head>
+<body>
+
+    <h2>Chat dengan Gemini AI</h2>
+    <input type="text" id="prompt" placeholder="Ketik pertanyaan atau perintah Anda...">
+    <button onclick="generateAI()">Kirim</button>
+    
+    <div id="output">Hasil respon Gemini akan muncul di sini...</div>
+
+    <script>
+        const API_KEY = 'MASUKKAN_GEMINI_API_KEY_ANDA';
+        
+        async function generateAI() {
+            const prompt = document.getElementById('prompt').value;
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = "Sedang mengetik...";
+
+            try {
+                const response = await fetch(`https://googleapis.com{API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ role: "user", parts: [{ text: prompt }] }]
+                    })
+                });
+
+                const data = await response.json();
+                const text = data.candidates[0].content.parts[0].text;
+                outputDiv.innerHTML = text.replace(/\n/g, '<br>');
+            } catch (error) {
+                outputDiv.innerHTML = "Terjadi kesalahan. Pastikan API Key Anda valid.";
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
+import React, { useState, useEffect } from 'react';
+import { 
+  Send, 
+  MessageCircle, 
+  Layout, 
+  Code, 
+  Type, 
+  BookOpen, 
+  Cpu, 
+  Printer, 
+  Smartphone, 
+  Package, 
+  Truck, 
+  Calendar, 
+  Moon, 
+  Sun, 
+  Menu,
+  X,
+  MapPin,
+  User,
+  Phone,
+  List,
+  ShoppingBag
+} from 'lucide-react';
+
+const ADMIN_WA = '6285692085114';
+const SERVICES = [
+  { id: 'design', name: 'Desain Grafis', icon: <Layout className="w-6 h-6 text-blue-600" /> },
+  { id: 'web', name: 'Pembuatan Website', icon: <Code className="w-6 h-6 text-blue-600" /> },
+  { id: 'typing', name: 'Pengetikan', icon: <Type className="w-6 h-6 text-blue-600" /> },
+  { id: 'edu', name: 'Pendidikan, Privat & Pelatihan', icon: <BookOpen className="w-6 h-6 text-blue-600" /> },
+  { id: 'ai', name: 'AI & Teknologi', icon: <Cpu className="w-6 h-6 text-blue-600" /> },
+  { id: 'print', name: 'Percetakan', icon: <Printer className="w-6 h-6 text-blue-600" /> },
+  { id: 'digital', name: 'Produk Digital (Ebook, Aplikasi AI Generator)', icon: <Smartphone className="w-6 h-6 text-blue-600" /> },
+  { id: 'physical', name: 'Produk Fisik (Buku, Iqro, Juz\'ama, dll)', icon: <Package className="w-6 h-6 text-blue-600" /> },
+  { id: 'fashion', name: 'Fashion (Baju, Jilbab, Sepatu, Tas & Alat Sekolah)', icon: <ShoppingBag className="w-6 h-6 text-blue-600" /> },
+  { id: 'sembako', name: 'Sembako', icon: <ShoppingBag className="w-6 h-6 text-blue-600" /> },
+  { id: 'courier', name: 'Layanan Kurir (Layanan Kirim Paket)', icon: <Truck className="w-6 h-6 text-blue-600" /> },
+  { id: 'event', name: 'Layanan Event', icon: <Calendar className="w-6 h-6 text-blue-600" /> },
+  { id: 'fundraising', name: 'Fundraising Penggalangan Dana (Donasi Infak Pembangunan Lantai 2 Madrasah Diniyah MDTU RBMI)', icon: <Calendar className="w-6 h-6 text-blue-600" /> },
+  { id: 'koperasi', name: 'Simpan Pinjam Koperasi Syari\'ah', icon: <ShoppingBag className="w-6 h-6 text-blue-600" /> },
+  { id: 'food', name: 'Makanan dan Minuman', icon: <ShoppingBag className="w-6 h-6 text-blue-600" /> },
+  { id: 'others', name: 'Lainnya', icon: <List className="w-6 h-6 text-blue-600" /> },
+];
+
+export default function App() {
+  const [darkMode, setDarkMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('home');
+  const [formData, setFormData] = useState({
+    name: '',
+    wa: '',
+    category: '',
+    desc: '',
+    location: ''
+  });
+
+  useEffect(() => {
+    if (darkMode) document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+  }, [darkMode]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleWhatsAppSubmit = (e) => {
+    e.preventDefault();
+    const message = `*Halo Admin SIMSALABIM*%0A%0A*Nama:* ${formData.name}%0A*No WA:* ${formData.wa}%0A*Kategori:* ${formData.category}%0A*Permintaan:* %0A${formData.desc}%0A%0A*Lokasi:* ${formData.location}%0A%0AMohon informasi harga dan proses pemesanannya. Terima kasih.`;
+    window.open(`https://wa.me/${ADMIN_WA}?text=${message}`, '_blank');
+  };
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-white dark:bg-slate-950 transition-colors duration-300`}>
+      <nav className="fixed w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('home')}>
+            <div className="text-2xl font-bold text-blue-600">SIMSALABIM</div>
+          </div>
+          <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition">
+            {darkMode ? <Sun size={20} className="text-white" /> : <Moon size={20} />}
+          </button>
+        </div>
+      </nav>
+
+      <main className="pt-24 pb-12 px-4 max-w-4xl mx-auto">
+        {activeTab === 'home' && (
+          <div className="text-center">
+            <img 
+              src="https://freeimage.host/i/C3lbqWx" 
+              alt="SIMSALABIM Logo" 
+              className="mx-auto mb-6 h-32 w-auto object-contain"
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
+            <h1 className="text-5xl font-extrabold text-slate-900 dark:text-white mb-6">SIMSALABIM</h1>
+            <p className="text-xl text-slate-600 dark:text-slate-300 mb-8">Pesan Produk dan Jasa Apa Saja dengan Mudah dan Cepat.</p>
+            <button onClick={() => setActiveTab('order')} className="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">Pesan Sekarang</button>
+          </div>
+        )}
+
+        {activeTab === 'order' && (
+          <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700">
+            <h2 className="text-3xl font-bold mb-8 dark:text-white text-center">Formulir Pesanan</h2>
+            <form onSubmit={handleWhatsAppSubmit} className="space-y-6">
+              
+              <div className="space-y-2">
+                <label className="text-sm font-semibold dark:text-slate-300 flex items-center gap-2"><User size={16} /> Nama Pemesan</label>
+                <input required name="name" value={formData.name} onChange={handleInputChange} className="w-full p-4 rounded-xl border dark:bg-slate-700 dark:border-slate-600 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Contoh: Budi Santoso" />
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold dark:text-slate-300 flex items-center gap-2"><Phone size={16} /> Nomor WhatsApp</label>
+                  <input required name="wa" type="tel" value={formData.wa} onChange={handleInputChange} className="w-full p-4 rounded-xl border dark:bg-slate-700 dark:border-slate-600 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Contoh: 08123456789" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold dark:text-slate-300 flex items-center gap-2"><List size={16} /> Kategori Layanan</label>
+                  <select required name="category" value={formData.category} onChange={handleInputChange} className="w-full p-4 rounded-xl border dark:bg-slate-700 dark:border-slate-600 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+                    <option value="">Pilih Kategori</option>
+                    {SERVICES.map(s => <option key={s.id} value={s.name}>{s.name}</option>)}
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold dark:text-slate-300">Deskripsi Kebutuhan Secara Rinci</label>
+                <textarea required name="desc" value={formData.desc} onChange={handleInputChange} rows={4} className="w-full p-4 rounded-xl border dark:bg-slate-700 dark:border-slate-600 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Tuliskan sedetail mungkin apa yang Anda perlukan..." />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold dark:text-slate-300 flex items-center gap-2"><MapPin size={16} /> Lokasi Pemesan</label>
+                <input required name="location" value={formData.location} onChange={handleInputChange} className="w-full p-4 rounded-xl border dark:bg-slate-700 dark:border-slate-600 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Kota atau alamat lengkap" />
+              </div>
+
+              <button type="submit" className="w-full py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition flex justify-center items-center gap-2 shadow-lg hover:shadow-blue-500/30">
+                <Send size={20} /> Kirim Pesanan via WhatsApp
+              </button>
+            </form>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
